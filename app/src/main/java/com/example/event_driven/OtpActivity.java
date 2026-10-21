@@ -80,6 +80,7 @@ public class OtpActivity extends AppCompatActivity {
         Random random = new Random();
         generatedOtp = String.format("%04d", random.nextInt(10000));
 
+        // SAVES THE RANDOM OTP FOR THE TEST TO CATCH
         getSharedPreferences("OtpPrefs", MODE_PRIVATE)
                 .edit()
                 .putString("latest_otp", generatedOtp)
@@ -106,7 +107,6 @@ public class OtpActivity extends AppCompatActivity {
             public void onFinish() {
                 tvTimer.setText("OTP expired. Click Resend.");
                 btnResend.setEnabled(true);
-                // Reset/refresh OTP automatically on expiration
                 generateAndLogNewOtp();
                 Toast.makeText(OtpActivity.this, "OTP expired and refreshed. Check Logcat.", Toast.LENGTH_SHORT).show();
             }
@@ -122,7 +122,6 @@ public class OtpActivity extends AppCompatActivity {
     }
 
     private void setupOtpInputs() {
-        // Auto-focus shifting logic across the 4 boxes
         etOtp1.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
